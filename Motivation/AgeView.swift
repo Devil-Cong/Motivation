@@ -64,7 +64,11 @@ class AgeView: ScreenSaverView {
 		return label
 	}()
 
-	private var motivationLevel: MotivationLevel
+	private var motivationLevel: MotivationLevel {
+		didSet {
+			updateLabel()
+		}
+	}
 
 	private var birthday: Date? {
 		didSet {
@@ -87,6 +91,14 @@ class AgeView: ScreenSaverView {
 	override func resize(withOldSuperviewSize oldSize: NSSize) {
 		super.resize(withOldSuperviewSize: oldSize)
 		updateFont()
+	}
+	
+	// Ensure font is updated when the view is added to window
+	override func viewDidMoveToWindow() {
+		super.viewDidMoveToWindow()
+		if window != nil {
+			updateFont()
+		}
 	}
 
 

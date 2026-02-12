@@ -88,7 +88,13 @@ class ConfigureSheetController: NSObject {
     }
 
     @IBAction func close(_ sender: NSButton) {
-        if let window = window {
+        guard let window = window else { return }
+        
+        // If displayed as a sheet, use endSheet to close it properly
+        if let sheetParent = window.sheetParent {
+            sheetParent.endSheet(window)
+        } else {
+            // Otherwise, close the window directly
             window.close()
         }
     }

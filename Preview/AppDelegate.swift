@@ -16,6 +16,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var screenSaverView = AgeView(frame: NSZeroRect, isPreview: false)
 
     lazy var sheetController: ConfigureSheetController = ConfigureSheetController()
+    
+    var preferencesWindow: NSWindow?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         screenSaverView.frame = (window.contentView?.bounds)!
@@ -32,9 +34,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         if let window = object as? NSWindow {
+            preferencesWindow = window
             setUp(preferencesWindow: window)
         }
 
+    }
+    
+    @IBAction func showPreferences(_ sender: Any?) {
+        guard let preferencesWindow = preferencesWindow else { return }
+        preferencesWindow.makeKeyAndOrderFront(sender)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
